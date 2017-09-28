@@ -43,14 +43,14 @@ def karma():
     # https://pythex.org/
     if '<@' in text:
         # Person was tagged and we actually received an ID
-        username_match_group = re.search( r'<@([\w\d_]+)>[\s+]?(\+\+|--)', text, re.M|re.I)
+        username_match_group = re.search( r'<@([\w\d_]+)>[\s+]?(\+\+|--).?', text, re.M|re.I)
         user_id = username_match_group.group(1)
         user_info = slack_client.api_call("users.info", user=user_id)
         if user_info.get('ok'):
             username_match = user_info['user']['name']
     else:
         # Person wasn't tagged, so we have the actual name
-        username_match_group = re.search( r'[\W+]?([\w\d_]+)[\s]?(\+\+|--)', text, re.M|re.I)
+        username_match_group = re.search( r'[\W+]?([\w\d_]+)[\s]?(\+\+|--).?', text, re.M|re.I)
         username_match = username_match_group.group(1)
 
     # Determine karma amount based on ++ or --
