@@ -32,21 +32,26 @@ def homepage():
 @app.route('/karma', methods=['POST'])
 def karma():
     users_total_karma = 0
+    username_match = ''
     text = request.form.get('text', '')
     print(request.form)
     print("text")
     print(text)
     print("/text")
 
-    user_info = slack_client.api_call("users.info", user='U67V1J9A6')
-    if user_info.get('ok'):
-        print(user_info)
-        print(user_info['user']['name'])
-
     # Get username from message
     # https://pythex.org/
-    username_match_group = re.search( r'[\s+]?(\+\+|--)[\W+]?([\w\d_]+)[\s]?', text, re.M|re.I)
-    username_match = username_match_group.group(2)
+    if '<@' in text:
+        # Person was tagged and we actually received an ID
+        username_match_group = re.search( r'[\s+]?(\+\+|--)<@([\w\d_]+)>[\s]?', text, re.M|re.I)
+        user_id = username_match_group.group(2)
+        user_info = slack_client.api_call("users.info", user=user_id)
+        if user_info.get('ok'):
+            username_match = user_info['user']['name']
+    else:
+        # Person wasn't tagged, so we have the actual name
+        username_match_group = re.search( r'[\s+]?(\+\+|--)[\W+]?([\w\d_]+)[\s]?', text, re.M|re.I)
+        username_match = username_match_group.group(2)
 
     # Determine karma amount based on ++ or --
     karma_given = 1 if ('++' in text) else -1
