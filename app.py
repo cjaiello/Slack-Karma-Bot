@@ -36,6 +36,10 @@ def karma():
     print(text)
     print("/text")
 
+    user_info = slack_client.api_call("users.info", user='U67V1J9A6')
+    if user_info.get('ok'):
+        print(user_info)
+
     # Get username from message
     # https://pythex.org/
     username_match_group = re.search( r'[\s+]?(\+\+|--)[\W+]?([\w\d_]+)[\s]?', text, re.M|re.I)
