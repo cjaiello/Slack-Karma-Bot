@@ -47,7 +47,7 @@ def karma():
             db.session.commit()
         else:
             # If user is in database, get user's karma from database
-            user = User.query.filter_by(User.username == username).first()
+            user = User.query.filter_by(User.username = username).first()
             user.karma = user.karma + 1
             db.session.commit()
             karma_number = user.karma
