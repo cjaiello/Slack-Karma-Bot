@@ -1,5 +1,6 @@
 from flask import Flask, request, Response, jsonify
 import re
+import psycopg2
 from flask_sqlalchemy import SQLAlchemy
 import os
 app = Flask(__name__)
