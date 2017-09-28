@@ -37,6 +37,7 @@ def karma():
         # https://pythex.org/
         username_match = re.search( r'[\s+]?\+\+[\W+]?([\w\d_]+)[\s]?', text, re.M|re.I)
         username = username_match.group(1)
+        print(username)
 
         # Look for user in database
         if not db.session.query(User).filter(User.username == username).count():
