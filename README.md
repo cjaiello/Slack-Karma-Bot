@@ -1,4 +1,5 @@
-# Lumbergh Slack Bot
-A very simple slack bot user.
+Simple slack karma bot running on Heroku.
 
-![screen](screen.png)
+Usage:
+++@christina_aiello or ++christina_aiello
+--@christina_aiello or --christina_aiello
