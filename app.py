@@ -50,7 +50,7 @@ def karma():
         username_match = username_match_group.group(1)
 
     # Determine karma amount based on + or -
-    karma_given = text.count('+') if ('+' in text) else (-1 * text.count('-'))
+    karma_given = (text.count('+')-1) if ('+' in text) else (-1 * (text.count('-')-1))
 
     # Look for user in database
     if not db.session.query(User).filter(User.username == username_match).count():
