@@ -31,6 +31,7 @@ def homepage():
 def karma():
     users_total_karma = 0
     text = request.form.get('text', '')
+    print(text)
 
     # Get username from message
     # https://pythex.org/
