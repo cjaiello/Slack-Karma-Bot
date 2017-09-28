@@ -49,8 +49,8 @@ def karma():
         username_match_group = re.search( r'[\W+]?([\w\d_]+)[\s]?(\+\+|--).?', text, re.M|re.I)
         username_match = username_match_group.group(1)
 
-    # Determine karma amount based on ++ or --
-    karma_given = 1 if ('++' in text) else -1
+    # Determine karma amount based on + or -
+    karma_given = text.count('+') if ('+' in text) else (-1 * text.count('-'))
 
     # Look for user in database
     if not db.session.query(User).filter(User.username == username_match).count():
