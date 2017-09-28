@@ -36,10 +36,9 @@ def karma():
     # https://pythex.org/
     username_match_group = re.search( r'[\s+]?(\+\+|--)[\W+]?([\w\d_]+)[\s]?', text, re.M|re.I)
     username_match = username_match_group.group(2)
-    print(username_match)
 
     if '++' in text:
-
+        ## Being nice:
         # Look for user in database
         if not db.session.query(User).filter(User.username == username_match).count():
             # User isn't in database.
@@ -56,12 +55,14 @@ def karma():
             karma_number = user.karma
             karma_recipient = user.username
     elif "--" in text:
+        # Being not so nice
         # If user is in database, get user's karma from database
         user = User.query.filter_by(username = username_match).first()
-        user.karma = user.karma - 1
-        db.session.commit()
-        karma_number = user.karma
-        karma_recipient = user.username
+        if user:
+            user.karma = user.karma - 1
+            db.session.commit()
+            karma_number = user.karma
+            karma_recipient = user.username
         # Return karma
     return jsonify(text=karma_recipient + "'s karma is now " + str(karma_number))
     return Response(), 200
