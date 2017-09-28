@@ -7,8 +7,11 @@ import os
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
-slack_client = SlackClient(os.environ['SLACKID'])
-print(os.environ['SLACKID'])
+
+
+client_id = os.environ["SLACK_CLIENT_ID"]
+client_secret = os.environ["SLACK_CLIENT_SECRET"]
+oauth_scope = os.environ["SLACK_BOT_SCOPE"]
 
 # Create our database model
 class User(db.Model):
@@ -32,6 +35,7 @@ def homepage():
 
 @app.route('/karma', methods=['POST'])
 def karma():
+    slack_client = SlackClient(os.environ['SLACK_BOT_TOKEN'])
     users_total_karma = 0
     username_match = ''
     text = request.form.get('text', '')
@@ -39,18 +43,14 @@ def karma():
     # Get username from message
     # https://pythex.org/
     if '<@' in text:
-        print('Text is')
-        print(text)
         # Person was tagged and we actually received an ID
         username_match_group = re.search( r'<@([\w\d_]+)>[\s+]?(\+\+|--).?', text, re.M|re.I)
         user_id = username_match_group.group(1)
-        print(user_id)
         user_info = slack_client.api_call("users.info", user=user_id)
         if user_info.get('ok'):
             username_match = user_info['user']['name']
-            print(username_match)
         else:
-            print(user_info)
+            print user_info
     else:
         # Person wasn't tagged, so we have the actual name
         username_match_group = re.search( r'[\W+]?([\w\d_]+)[\s]?(\+\+|--).?', text, re.M|re.I)
@@ -76,6 +76,36 @@ def karma():
     # Return karma
     return jsonify(text=username_match + "'s karma is now " + str(users_total_karma))
     return Response(), 200
+
+@app.route("/begin_auth", methods=["GET"])
+def pre_install():
+  return '''
+      <a href="https://slack.com/oauth/authorize?scope={0}&client_id={1}">
+          Add to Slack
+      </a>
+  '''.format(oauth_scope, client_id)
+
+@app.route("/finish_auth", methods=["GET", "POST"])
+def post_install():
+
+      # Retrieve the auth code from the request params
+      auth_code = request.args['code']
+
+      # An empty string is a valid token for this request
+      sc = SlackClient("")
+
+      # Request the auth tokens from Slack
+      auth_response = sc.api_call(
+            "oauth.access",
+            client_id=client_id,
+            client_secret=client_secret,
+            code=auth_code
+            )
+
+    # Save the bot token to an environmental variable or to your data store
+    # for later use
+    os.environ["SLACK_USER_TOKEN"] = auth_response['access_token']
+    os.environ["SLACK_BOT_TOKEN"] = auth_response['bot']['bot_access_token']
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
