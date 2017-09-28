@@ -35,15 +35,15 @@ def karma():
     if '++' in text:
         # Get username from message
         # https://pythex.org/
-        username_match = re.search( r'[\s+]?\+\+[\W+]?([\w\d_]+)[\s]?', text, re.M|re.I)
-        username = username_match.group(1)
-        print(username)
+        username_match_group = re.search( r'[\s+]?\+\+[\W+]?([\w\d_]+)[\s]?', text, re.M|re.I)
+        username_match = username_match_group.group(1)
+        print(username_match)
 
         # Look for user in database
-        if not db.session.query(User).filter(User.username == username).count():
+        if not db.session.query(User).filter(User.username == username_match).count():
             # User isn't in database.
             # Start them off with 1 karma point
-            user = User(username, 1)
+            user = User(username_match, 1)
             db.session.add(user)
             db.session.commit()
         else:
