@@ -2,8 +2,8 @@ from flask import Flask, request, Response, jsonify
 import re
 from flask.ext.sqlalchemy import SQLAlchemy
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/karma_database'
-db = SQLAlchemy(app)
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/karma_database'
+#db = SQLAlchemy(app)
 
 @app.route('/karma', methods=['POST'])
 def karma():
@@ -20,7 +20,7 @@ def karma():
         # Add 1 to karma
         # Update user's karma in database
         # Return karma
-        return jsonify(text=link)
+        return jsonify(text="test")
     return Response(), 200
 
 if __name__ == '__main__':
