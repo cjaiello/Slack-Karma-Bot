@@ -1,1 +1,1 @@
-web: gunicorn shielded-mountain-81484:app
+web: gunicorn app:app --log-file=-
