@@ -34,8 +34,8 @@ def karma():
     text = request.form.get('text', '')
     # Get username from message
     # https://pythex.org/
-    username_match_group = re.search( r'[\s+]?\+\+[\W+]?([\w\d_]+)[\s]?', text, re.M|re.I)
-    username_match = username_match_group.group(1)
+    username_match_group = re.search( r'[\s+]?(\+\+|--)[\W+]?([\w\d_]+)[\s]?', text, re.M|re.I)
+    username_match = username_match_group.group(2)
     print(username_match)
 
     if '++' in text:
