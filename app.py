@@ -27,8 +27,6 @@ def karma():
         # Update user's karma in database
         # Return karma
         return jsonify(text="test")
-    else:
-        return jsonify(text="no match")
     return Response(), 200
 
 if __name__ == '__main__':
