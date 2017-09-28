@@ -1,12 +1,12 @@
 from flask import Flask, request, Response, jsonify
-import re
+#import re
 #from flask.ext.sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/karma_database'
 #db = SQLAlchemy(app)
 
 @app.route('/', methods=['POST'])
-    return "Hello"
+return "Hello"
 
 @app.route('/karma', methods=['POST'])
 def karma():
