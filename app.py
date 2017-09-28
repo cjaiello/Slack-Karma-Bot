@@ -38,9 +38,12 @@ def karma():
     # Get username from message
     # https://pythex.org/
     if '<@' in text:
+        print('Text is')
+        print(text)
         # Person was tagged and we actually received an ID
         username_match_group = re.search( r'<@([\w\d_]+)>[\s+]?(\+\+|--).?', text, re.M|re.I)
         user_id = username_match_group.group(1)
+        print(user_id)
         user_info = slack_client.api_call("users.info", user=user_id)
         if user_info.get('ok'):
             username_match = user_info['user']['name']
