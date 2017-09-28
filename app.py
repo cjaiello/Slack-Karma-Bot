@@ -47,6 +47,7 @@ def karma():
         user_info = slack_client.api_call("users.info", user=user_id)
         if user_info.get('ok'):
             username_match = user_info['user']['name']
+            print(username_match)
     else:
         # Person wasn't tagged, so we have the actual name
         username_match_group = re.search( r'[\W+]?([\w\d_]+)[\s]?(\+\+|--).?', text, re.M|re.I)
