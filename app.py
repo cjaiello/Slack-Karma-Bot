@@ -32,12 +32,13 @@ def karma():
     karma_recipient = ""
     karma_number = 1
     text = request.form.get('text', '')
+    # Get username from message
+    # https://pythex.org/
+    username_match_group = re.search( r'[\s+]?\+\+[\W+]?([\w\d_]+)[\s]?', text, re.M|re.I)
+    username_match = username_match_group.group(1)
+    print(username_match)
+
     if '++' in text:
-        # Get username from message
-        # https://pythex.org/
-        username_match_group = re.search( r'[\s+]?\+\+[\W+]?([\w\d_]+)[\s]?', text, re.M|re.I)
-        username_match = username_match_group.group(1)
-        print(username_match)
 
         # Look for user in database
         if not db.session.query(User).filter(User.username == username_match).count():
