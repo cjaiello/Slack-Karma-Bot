@@ -5,8 +5,8 @@ app = Flask(__name__)
 #app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/karma_database'
 #db = SQLAlchemy(app)
 
-@app.route('/', methods=['POST'])
-return jsonify(text="Hello")
+@app.route('/')
+print "Test"
 
 @app.route('/karma', methods=['POST'])
 def karma():
