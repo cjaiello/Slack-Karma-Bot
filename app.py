@@ -1,4 +1,5 @@
 from flask import Flask, request, Response, jsonify
+from slackclient import SlackClient
 import re
 import psycopg2
 from flask_sqlalchemy import SQLAlchemy
@@ -6,6 +7,7 @@ import os
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
+slack_client = SlackClient('xoxp-211298373313-211987621346-249395582647-d9db570f14ea605be2f9c34939a6d01a')
 
 # Create our database model
 class User(db.Model):
