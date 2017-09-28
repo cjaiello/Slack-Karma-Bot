@@ -35,7 +35,8 @@ def karma():
     if '++' in text:
         # Get username from message
         # https://pythex.org/
-        username = re.match( r'[\s+]?\+\+[\s+]?([a-z A-Z 0-9]+[\s+]?)', text, re.M|re.I)
+        username_match = re.search( r'[\s+]?\+\+[\s+]?([a-z A-Z 0-9]+[\s+]?)', text, re.M|re.I)
+        username = username_match.group(1)
 
         # Look for user in database
         if not db.session.query(User).filter(User.username == username).count():
