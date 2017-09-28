@@ -54,8 +54,15 @@ def karma():
             db.session.commit()
             karma_number = user.karma
             karma_recipient = user.username
+    elif "--" in text:
+        # If user is in database, get user's karma from database
+        user = User.query.filter_by(username = username_match).first()
+        user.karma = user.karma - 1
+        db.session.commit()
+        karma_number = user.karma
+        karma_recipient = user.username
         # Return karma
-        return jsonify(text=karma_recipient + "'s karma is now " + str(karma_number))
+    return jsonify(text=karma_recipient + "'s karma is now " + str(karma_number))
     return Response(), 200
 
 if __name__ == '__main__':
