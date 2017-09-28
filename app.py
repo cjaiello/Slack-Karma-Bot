@@ -6,7 +6,7 @@ app = Flask(__name__)
 #db = SQLAlchemy(app)
 
 @app.route('/', methods=['POST'])
-return "Hello"
+return jsonify(text="Hello")
 
 @app.route('/karma', methods=['POST'])
 def karma():
