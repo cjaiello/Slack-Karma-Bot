@@ -79,11 +79,12 @@ def karma():
 
 @app.route("/begin_auth", methods=["GET"])
 def pre_install():
-  return '''
-      <a href="https://slack.com/oauth/authorize?scope={0}&client_id={1}">
-          Add to Slack
-      </a>
-  '''.format(oauth_scope, client_id)
+    print(client_id)
+    return '''
+        <a href="https://slack.com/oauth/authorize?scope={0}&client_id={1}">
+            Add to Slack
+        </a>
+    '''.format(oauth_scope, client_id)
 
 @app.route("/finish_auth", methods=["GET", "POST"])
 def post_install():
