@@ -8,6 +8,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
 slack_client = SlackClient(os.environ['SLACKID'])
+print(os.environ['SLACKID'])
 
 # Create our database model
 class User(db.Model):
