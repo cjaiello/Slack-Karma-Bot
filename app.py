@@ -53,7 +53,7 @@ def karma():
             karma_number = user.karma
             karma_recipient = user.username
         # Return karma
-        return jsonify(text=karma_recipient + "'s karma is now " + karma_number)
+        return jsonify(text=karma_recipient + "'s karma is now " + str(karma_number))
     return Response(), 200
 
 if __name__ == '__main__':
