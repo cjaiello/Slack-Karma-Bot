@@ -2,7 +2,7 @@ from flask import Flask, request, Response, jsonify
 import re
 from flask.ext.sqlalchemy import SQLAlchemy
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql-clean-34734'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
 
 # Create our database model
