@@ -1,5 +1,4 @@
 from flask import Flask, request, Response, jsonify
-from datetime import datetime
 import re
 #from flask.ext.sqlalchemy import SQLAlchemy
 app = Flask(__name__)
@@ -8,13 +7,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def homepage():
-    the_time = datetime.now().strftime("%A, %d %b %Y %l:%M %p")
-
     return """
-    <h1>Hello heroku</h1>
-    <p>It is currently {time}.</p>
-    <img src="http://loremflickr.com/600/400" />
-    """.format(time=the_time)
+    KarmaBot
+    """
 
 @app.route('/karma', methods=['POST'])
 def karma():
