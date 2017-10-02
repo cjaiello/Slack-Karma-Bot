@@ -1,7 +1,6 @@
+By Christina Aiello
+
 Simple slack karma bot running on Heroku.
+Usage: ++@christina_aiello or --@christina_aiello (or +++, ++++, etc)
 
-Usage:
-
-++@christina_aiello or ++christina_aiello
-
---@christina_aiello or --christina_aiello
+![alt text](https://raw.githubusercontent.com/cjaiello/karmabot/master/screenshot.png)
