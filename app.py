@@ -1,3 +1,5 @@
+# Karma Bot by Christina Aiello, 2017. cjaiello@wpi.edu
+
 from flask import Flask, request, Response, jsonify
 from slackclient import SlackClient
 import re
@@ -6,6 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 import os
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
@@ -76,37 +79,6 @@ def karma():
     # Return karma
     return jsonify(text=username_match + "'s karma is now " + str(users_total_karma))
     return Response(), 200
-
-@app.route("/begin_auth", methods=["GET"])
-def pre_install():
-    print(client_id)
-    return '''
-        <a href="https://slack.com/oauth/authorize?scope={0}&client_id={1}">
-            Add to Slack
-        </a>
-    '''.format(oauth_scope, client_id)
-
-@app.route("/finish_auth", methods=["GET", "POST"])
-def post_install():
-
-      # Retrieve the auth code from the request params
-      auth_code = request.args['code']
-
-      # An empty string is a valid token for this request
-      sc = SlackClient("")
-
-      # Request the auth tokens from Slack
-      auth_response = sc.api_call(
-            "oauth.access",
-            client_id=client_id,
-            client_secret=client_secret,
-            code=auth_code
-            )
-
-      # Save the bot token to an environmental variable or to your data store
-      # for later use
-      os.environ["SLACK_USER_TOKEN"] = auth_response['access_token']
-      os.environ["SLACK_BOT_TOKEN"] = auth_response['bot']['bot_access_token']
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
