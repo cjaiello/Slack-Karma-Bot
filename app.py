@@ -49,13 +49,13 @@ def karma():
         # Person was tagged and we actually received an ID
         print("text:" + text)
         username_match_group = re.search( r'<@([\w\d_]+)>[\s+]?(\+\+|--).?', text, re.M|re.I)
-        print(username_match_group)
         user_id = username_match_group.group(1)
         user_info = slack_client.api_call("users.info", user=user_id)
         if user_info.get('ok'):
             username_match = user_info['user']['name']
         else:
             print(user_info)
+            return jsonify("Error in giving karma. Please contact caiello@vistaprint.com")
     else:
         # Person wasn't tagged, so we have the actual name
         username_match_group = re.search( r'[\W+]?([\w\d_]+)[\s]?(\+\+|--).?', text, re.M|re.I)
@@ -80,7 +80,6 @@ def karma():
         users_total_karma = user.karma
     # Return karma
     return jsonify(text=username_match + "'s karma is now " + str(users_total_karma))
-    return Response(), 200
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
