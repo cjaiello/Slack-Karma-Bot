@@ -115,6 +115,10 @@ def karma():
                 icon_emoji=":plus:"
             )
             return jsonify(text="karma_message")
+        else:
+            not_karma_message = "Not a karma message"
+            print(not_karma_message + " | " + str(channel_event))
+            return jsonify(text=not_karma_message)
     
     # DO NOT HAVE THIS BE A LOG, JUST A PRINT
     not_karma_message = "Not a karma message"
