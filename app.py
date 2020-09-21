@@ -48,7 +48,7 @@ def karma():
         text = str(channel_event["text"])
 
         if text.find("++") > -1 or text.find("--") > -1:
-            log("New non-bot message came in! " + channel_event + " \nThis is a potential karma message! " + str(text))
+            log("New non-bot message came in! " + str(channel_event) + " \nThis is a potential karma message! " + str(text))
 
             if text.find("<@") > -1:
                 # Person was tagged and we actually received an ID
