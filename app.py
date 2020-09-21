@@ -116,7 +116,7 @@ def karma():
             )
             return jsonify(text="karma_message")
         elif channel_event['type'] == 'app_mention' and text.find(BOT_USER_ID) > -1:
-            pinged_bot_message = channel_event['user'] + " pinged the bot at " + channel_event['event_ts'] + " | "
+            pinged_bot_message = channel_event['user'] + " pinged the bot at " + channel_event['event_ts'] + " \n\n\n\n\n\n "
             log(pinged_bot_message + str(channel_event))
             all_users = DATABASE.session.query(User)
             users_and_karma = ""
