@@ -40,7 +40,7 @@ def karma():
     username_match = ''
     channel_event = request.json['event']
     print("channel_event was: " + str(channel_event))
-    text = channel_event['text']
+    text = str(channel_event['text'])
     channel_id = channel_event['channel']
     print("text was: " + str(text))
     print("channel_id was: " + str(channel_id))
@@ -64,7 +64,8 @@ def karma():
             # Person wasn't tagged, so we have the actual name
             username_match_group = re.search( r'[\W+]?([\w\d_]+)[\s]?(\+\+|--).?', text, re.M|re.I)
             if username_match_group == None:
-                return
+                print("No karma added because we can't pull a name")
+                return jsonify(text="No karma added because we can't pull a name")
             else:
                 username_match = username_match_group.group(1)
 
