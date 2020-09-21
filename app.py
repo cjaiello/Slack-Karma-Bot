@@ -55,7 +55,7 @@ def karma():
             user_info = SLACK_CLIENT.users_info(user=user_id)
             print(str(user_info))
             if user_info != None:
-                username_match = user_info['user']['profile']['name']
+                username_match = user_info['user']['name']
             else:
                 print(user_info)
                 return jsonify("Error in giving karma. Please contact caiello@vistaprint.com")
