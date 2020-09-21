@@ -41,7 +41,9 @@ def karma():
     channel_event = request.json['event']
     print("channel_event was: " + str(channel_event))
     text = channel_event['text']
+    channel_id = channel_event['channel']
     print("text was: " + str(text))
+    print("channel_id was: " + str(channel_id))
 
     if '++' in text:
         print("This is a potential karma message!")
@@ -86,16 +88,19 @@ def karma():
             user.karma = user.karma + karma_given
             db.session.commit()
             users_total_karma = user.karma
+        
         # Return karma
-        print(jsonify(text=username_match + "'s karma is now " + str(users_total_karma)))
+        karma_message = username_match + "'s karma is now " + str(users_total_karma)
+        print(karma_message)
 
         response = SLACK_CLIENT.chat_postMessage(
-            channel=str(channel_name),
-            text= ("Please reply here with your standup status!" if (message == None) else message),
-            username="Standup Bot",
-            icon_emoji=":memo:"
+            channel=str(channel_id),
+            text= karma_message,
+            username="Karma Bot",
+            icon_emoji=":plus:"
         )
     else:
+        print("No karma added")
         return jsonify(text="No karma added")
 
 if __name__ == '__main__':
