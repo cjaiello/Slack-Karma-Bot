@@ -123,8 +123,9 @@ def karma():
                 all_users = DATABASE.session.query(User)
                 users_and_karma = ""
                 for user in all_users:
-                    users_and_karma += (user.username) + ": " + user.karma + "\n"
-                    print("User: " + str(user.username))
+                    username_and_karma = (user.username) + ": " + str(user.karma) + "\n"
+                    users_and_karma += username_and_karma
+                    print(username_and_karma)
                 print(users_and_karma)
                 response = SLACK_CLIENT.chat_postMessage(
                     channel=str(channel_id),
