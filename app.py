@@ -45,8 +45,7 @@ def karma():
 
     if "text" in channel_event and not is_bot_message:
         text = str(channel_event["text"])
-        log("text was: " + str(text))
-        log("channel_id was: " + str(channel_id))
+        log("New non-bot message came in! Text was: " + str(text) + "and channel_id was: " + str(channel_id))
 
         if text.find("++") > -1 or text.find("--") > -1:
             log("This is a potential karma message! " + str(text))
@@ -57,12 +56,13 @@ def karma():
                 username_match_group = re.search( r"<@([\w\d_]+)>[\s+]?(\+\+|--).?", text, re.M|re.I)
                 user_id = username_match_group.group(1)
                 user_info = SLACK_CLIENT.users_info(user=user_id)
-                log(str(user_info))
+                log("User info of person getting karma: " + str(user_info))
                 if user_info != None:
                     username_match = user_info["user"]["name"]
                 else:
-                    log(user_info)
-                    return jsonify("Error in giving karma. Please contact caiello@vistaprint.com")
+                    message = "Error in giving karma to: " + user_info
+                    log(message)
+                    return jsonify(message)
             else:
                 # Person wasn"t tagged, so we have the actual name
                 username_match_group = re.search( r"[\W+]?([\w\d_]+)[\s]?(\+\+|--).?", text, re.M|re.I)
@@ -75,13 +75,15 @@ def karma():
             # Determine karma amount based on + or -
             karma_given = (text.count("+")-1) if ("+" in text) else (-1 * (text.count("-")-1))
             was_karma_limited = False
-            if karma_given > 5:
+            upper_bound = 5
+            lower_bound = -5
+            if karma_given > upper_bound:
                 log("Karma given was: " + str(karma_given) + " but we are limiting it.")
-                karma_given = 5
+                karma_given = upper_bound
                 was_karma_limited = True
-            elif karma_given < -5:
+            elif karma_given < lower_bound:
                 log("Karma given was: " + str(karma_given) + " but we are limiting it.")
-                karma_given = -5
+                karma_given = lower_bound
                 was_karma_limited = True
             log("Karma given to " + username_match + " was " + str(karma_given))
 
@@ -113,8 +115,11 @@ def karma():
                 icon_emoji=":plus:"
             )
             return jsonify(text="karma_message")
-    print("Not a karma message") # DO NOT HAVE THIS BE A LOG, JUST A PRINT
-    return jsonify(text="Not a karma message")
+    
+    # DO NOT HAVE THIS BE A LOG, JUST A PRINT
+    not_karma_message = "Not a karma message"
+    print(not_karma_message + " | " + str(channel_event))
+    return jsonify(text=not_karma_message)
 
 
 # This will send logs to the "karma_bot_log" channel in our workspace
