@@ -45,7 +45,7 @@ def karma():
     print("text was: " + str(text))
     print("channel_id was: " + str(channel_id))
 
-    if '++' in text:
+    if '++' or '--' in text:
         print("This is a potential karma message!")
 
         if '<@' in text:
@@ -74,6 +74,10 @@ def karma():
             print("Karma given was: " + str(karma_given) + " but we are limiting it.")
             karma_given = 5
             was_karma_limited = True
+        elif karma_given < -5:
+            print("Karma given was: " + str(karma_given) + " but we are limiting it.")
+            karma_given = -5
+            was_karma_limited = True
         print("Karma given to " + username_match + " was " + str(karma_given))
 
         # Look for user in database
@@ -94,7 +98,7 @@ def karma():
             users_total_karma = user.karma
         
         # Return karma
-        karma_message = ("Karma given was too high! Max of 5 allowed. " if was_karma_limited else "") + username_match + "'s karma is now " + str(users_total_karma) + "."
+        karma_message = ("Karma given was too much! Max of 5 and -5 allowed. " if was_karma_limited else "") + username_match + "'s karma is now " + str(users_total_karma) + "."
         print(karma_message)
 
         response = SLACK_CLIENT.chat_postMessage(
