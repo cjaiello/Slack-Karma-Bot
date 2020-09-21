@@ -39,6 +39,8 @@ def karma():
     username_match = ''
     text = request.form.get('text', '')
     print(text)
+    print(request.form)
+    print(request.json)
 
     # Get username from message
     # https://pythex.org/
