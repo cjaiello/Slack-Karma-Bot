@@ -45,7 +45,7 @@ def karma():
     print("text was: " + str(text))
     print("channel_id was: " + str(channel_id))
 
-    if '++' or '--' in text:
+    if text.find("++") > -1 or text.find("--") > -1:
         print("This is a potential karma message! " + str(text))
 
         if '<@' in text:
