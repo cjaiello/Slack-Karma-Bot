@@ -35,10 +35,7 @@ def homepage():
 @app.route('/karma', methods=['GET', 'POST'])
 def karma():
     print(request)
-    print(request.body)
-    text = request.form.get('text', '')
-    print(request.form)
-    print(text)
+    print(request.json)
 
     # slack_client = SlackClient(os.environ['SLACK_BOT_TOKEN'])
     # users_total_karma = 0
