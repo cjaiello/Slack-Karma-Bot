@@ -38,6 +38,7 @@ def karma():
     users_total_karma = 0
     username_match = ''
     text = request.json.get('text', '')
+    print("Message was: " + str(text))
 
     if '++' in text:
         print("This is a potential karma message!")
@@ -80,6 +81,8 @@ def karma():
             users_total_karma = user.karma
         # Return karma
         return jsonify(text=username_match + "'s karma is now " + str(users_total_karma))
+    else:
+        return None
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
