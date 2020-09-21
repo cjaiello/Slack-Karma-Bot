@@ -6,6 +6,7 @@ import re
 import psycopg2
 from flask_sqlalchemy import SQLAlchemy
 import os
+from time import localtime, strftime
 
 SLACK_CLIENT = slack.WebClient(os.environ["SLACK_BOT_TOKEN"], timeout=30)
 app = Flask(__name__)
