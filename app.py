@@ -34,6 +34,7 @@ def homepage():
 
 @app.route('/karma', methods=['GET', 'POST'])
 def karma():
+    print("Endpoint was hit!")
     slack_client = SlackClient(os.environ['SLACK_BOT_TOKEN'])
     users_total_karma = 0
     username_match = ''
