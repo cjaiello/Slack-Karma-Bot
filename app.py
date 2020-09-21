@@ -40,76 +40,78 @@ def karma():
     username_match = ""
     channel_event = request.json["event"]
     log("channel_event was: " + str(channel_event))
-    text = str(channel_event["text"])
-    channel_id = channel_event["channel"]
-    log("text was: " + str(text))
-    log("channel_id was: " + str(channel_id))
 
-    if text.find("++") > -1 or text.find("--") > -1:
-        log("This is a potential karma message! " + str(text))
+    if "text" in channel_event:
+        text = str(channel_event["text"])
+        channel_id = channel_event["channel"]
+        log("text was: " + str(text))
+        log("channel_id was: " + str(channel_id))
 
-        if text.find("<@") > -1:
-            # Person was tagged and we actually received an ID
-            log("User ID of person we want to give karma to:" + text)
-            username_match_group = re.search( r"<@([\w\d_]+)>[\s+]?(\+\+|--).?", text, re.M|re.I)
-            user_id = username_match_group.group(1)
-            user_info = SLACK_CLIENT.users_info(user=user_id)
-            log(str(user_info))
-            if user_info != None:
-                username_match = user_info["user"]["name"]
+        if text.find("++") > -1 or text.find("--") > -1:
+            log("This is a potential karma message! " + str(text))
+
+            if text.find("<@") > -1:
+                # Person was tagged and we actually received an ID
+                log("User ID of person we want to give karma to:" + text)
+                username_match_group = re.search( r"<@([\w\d_]+)>[\s+]?(\+\+|--).?", text, re.M|re.I)
+                user_id = username_match_group.group(1)
+                user_info = SLACK_CLIENT.users_info(user=user_id)
+                log(str(user_info))
+                if user_info != None:
+                    username_match = user_info["user"]["name"]
+                else:
+                    log(user_info)
+                    return jsonify("Error in giving karma. Please contact caiello@vistaprint.com")
             else:
-                log(user_info)
-                return jsonify("Error in giving karma. Please contact caiello@vistaprint.com")
-        else:
-            # Person wasn"t tagged, so we have the actual name
-            username_match_group = re.search( r"[\W+]?([\w\d_]+)[\s]?(\+\+|--).?", text, re.M|re.I)
-            if username_match_group == None:
-                log("No karma added because we can"t pull a name")
-                return jsonify(text="No karma added because we can"t pull a name")
+                # Person wasn"t tagged, so we have the actual name
+                username_match_group = re.search( r"[\W+]?([\w\d_]+)[\s]?(\+\+|--).?", text, re.M|re.I)
+                if username_match_group == None:
+                    log("No karma added because we can't pull a name")
+                    return jsonify(text="No karma added because we can't pull a name")
+                else:
+                    username_match = username_match_group.group(1)
+
+            # Determine karma amount based on + or -
+            karma_given = (text.count("+")-1) if ("+" in text) else (-1 * (text.count("-")-1))
+            was_karma_limited = False
+            if karma_given > 5:
+                log("Karma given was: " + str(karma_given) + " but we are limiting it.")
+                karma_given = 5
+                was_karma_limited = True
+            elif karma_given < -5:
+                log("Karma given was: " + str(karma_given) + " but we are limiting it.")
+                karma_given = -5
+                was_karma_limited = True
+            log("Karma given to " + username_match + " was " + str(karma_given))
+
+            # Look for user in database
+            if not db.session.query(User).filter(User.username == username_match).count():
+                log("Adding to database: " + username_match)
+                # User isn"t in database. Create our user object
+                user = User(username_match, karma_given)
+                # Add them to the database
+                db.session.add(user)
+                db.session.commit()
+                users_total_karma = karma_given
             else:
-                username_match = username_match_group.group(1)
+                log("Updating in database: " + username_match)
+                # If user is in database, get user"s karma from database
+                user = User.query.filter_by(username = username_match).first()
+                user.karma = user.karma + karma_given
+                db.session.commit()
+                users_total_karma = user.karma
+            
+            # Return karma
+            karma_message = ("Karma given was too much! Max of 5 and -5 allowed. " if was_karma_limited else "") + username_match + ""s karma is now " + str(users_total_karma) + "."
+            log(karma_message)
 
-        # Determine karma amount based on + or -
-        karma_given = (text.count("+")-1) if ("+" in text) else (-1 * (text.count("-")-1))
-        was_karma_limited = False
-        if karma_given > 5:
-            log("Karma given was: " + str(karma_given) + " but we are limiting it.")
-            karma_given = 5
-            was_karma_limited = True
-        elif karma_given < -5:
-            log("Karma given was: " + str(karma_given) + " but we are limiting it.")
-            karma_given = -5
-            was_karma_limited = True
-        log("Karma given to " + username_match + " was " + str(karma_given))
-
-        # Look for user in database
-        if not db.session.query(User).filter(User.username == username_match).count():
-            log("Adding to database: " + username_match)
-            # User isn"t in database. Create our user object
-            user = User(username_match, karma_given)
-            # Add them to the database
-            db.session.add(user)
-            db.session.commit()
-            users_total_karma = karma_given
-        else:
-            log("Updating in database: " + username_match)
-            # If user is in database, get user"s karma from database
-            user = User.query.filter_by(username = username_match).first()
-            user.karma = user.karma + karma_given
-            db.session.commit()
-            users_total_karma = user.karma
-        
-        # Return karma
-        karma_message = ("Karma given was too much! Max of 5 and -5 allowed. " if was_karma_limited else "") + username_match + ""s karma is now " + str(users_total_karma) + "."
-        log(karma_message)
-
-        response = SLACK_CLIENT.chat_postMessage(
-            channel=str(channel_id),
-            text= karma_message,
-            username="Karma Bot",
-            icon_emoji=":plus:"
-        )
-        return jsonify(text="karma_message")
+            response = SLACK_CLIENT.chat_postMessage(
+                channel=str(channel_id),
+                text= karma_message,
+                username="Karma Bot",
+                icon_emoji=":plus:"
+            )
+            return jsonify(text="karma_message")
     else:
         log("Not a karma message")
         return jsonify(text="Not a karma message")
