@@ -115,12 +115,14 @@ def karma():
                 icon_emoji=":plus:"
             )
             return jsonify(text="karma_message")
-        elif text.find(BOT_USER_ID) > -1:
-            pinged_bot_message = "Someone pinged the bot!"
-            all_users = DATABASE.session.query(User)
-            for user in all_users:
-                print("User: " + str(user))
-            return jsonify(text=not_karma_message)
+        else:
+            print(text.find(BOT_USER_ID) > -1)
+            if text.find(BOT_USER_ID) > -1):
+                pinged_bot_message = "Someone pinged the bot!"
+                all_users = DATABASE.session.query(User)
+                for user in all_users:
+                    print("User: " + str(user))
+                return jsonify(text=not_karma_message)
     
     # DO NOT HAVE THIS BE A LOG, JUST A PRINT
     not_karma_message = "Not a karma message"
