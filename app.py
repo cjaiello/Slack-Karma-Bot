@@ -14,6 +14,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 DATABASE = SQLAlchemy(app)
 BOT_USER_ID = "@U01AN5ZJP0X"
+KARMA_BOT_CHANNEL = "C01B3N2ENAX"
 
 # Create our database model
 class User(DATABASE.Model):
@@ -43,7 +44,7 @@ def karma():
     channel_id = channel_event["channel"]
     is_bot_message = "subtype" in channel_event and channel_event["subtype"] == "bot_message"
 
-    if "text" in channel_event and not is_bot_message and channel_event['channel'] != "C01AZV5LTNY":
+    if "text" in channel_event and not is_bot_message and channel_event['channel'] != KARMA_BOT_CHANNEL:
         text = str(channel_event["text"])
 
         if text.find("++") > -1 or text.find("--") > -1:
