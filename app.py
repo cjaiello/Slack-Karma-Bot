@@ -37,6 +37,7 @@ def karma():
     slack_client = SlackClient(os.environ['SLACK_BOT_TOKEN'])
     users_total_karma = 0
     username_match = ''
+    print(request.json)
     text = request.json['text']
     print("Message was: " + str(text))
 
