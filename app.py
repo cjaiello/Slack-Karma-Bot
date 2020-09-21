@@ -113,7 +113,7 @@ def karma():
                 icon_emoji=":plus:"
             )
             return jsonify(text="karma_message")
-    log("Not a karma message")
+    print("Not a karma message") # DO NOT HAVE THIS BE A LOG, JUST A PRINT
     return jsonify(text="Not a karma message")
 
 
