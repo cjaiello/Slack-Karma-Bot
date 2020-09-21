@@ -120,14 +120,14 @@ def karma():
 
 # This will send logs to the "karma_bot_log" channel in our workspace
 def log(log_message):
-    log_message = "```*[" + strftime("%Y-%m-%d %H:%M:%S", localtime()) + "]* " + log_message + "```"
+    log_message = "*[" + strftime("%Y-%m-%d %H:%M:%S", localtime()) + "]* " + log_message
     print(log_message)
-    response = SLACK_CLIENT.chat_postMessage(
-        channel="karma_bot_log",
-        text= log_message,
-        username="Karma Bot",
-        icon_emoji=":plus:"
-    )
+    # response = SLACK_CLIENT.chat_postMessage(
+    #     channel="karma_bot_log",
+    #     text= log_message,
+    #     username="Karma Bot",
+    #     icon_emoji=":plus:"
+    # )
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
