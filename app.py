@@ -6,8 +6,6 @@ import re
 import psycopg2
 from flask_sqlalchemy import SQLAlchemy
 import os
-import json
-
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -39,10 +37,10 @@ def karma():
     slack_client = SlackClient(os.environ['SLACK_BOT_TOKEN'])
     users_total_karma = 0
     username_match = ''
-    print(request.json)
-    json_request = json.loads(request.json)
-    text = json_request['text']
-    print("Message was: " + str(text))
+    channel_event = request.json['event']
+    print("channel_event was: " + str(channel_event))
+    text = channel_event['text']
+    print("text was: " + str(text))
 
     if '++' in text:
         print("This is a potential karma message!")
