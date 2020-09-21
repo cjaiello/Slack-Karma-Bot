@@ -41,10 +41,10 @@ def karma():
     username_match = ""
     channel_event = request.json["event"]
     log("channel_event was: " + str(channel_event))
+    channel_id = channel_event["channel"]
 
-    if "text" in channel_event:
+    if "text" in channel_event and channel_id != "C01B3N2ENAX":
         text = str(channel_event["text"])
-        channel_id = channel_event["channel"]
         log("text was: " + str(text))
         log("channel_id was: " + str(channel_id))
 
@@ -120,7 +120,7 @@ def karma():
 
 # This will send logs to the "karma_bot_log" channel in our workspace
 def log(log_message):
-    log_message = "[" + strftime("%Y-%m-%d %H:%M:%S", localtime()) + "]" + log_message
+    log_message = "```*[" + strftime("%Y-%m-%d %H:%M:%S", localtime()) + "]* " + log_message + "```"
     print(log_message)
     response = SLACK_CLIENT.chat_postMessage(
         channel="karma_bot_log",
