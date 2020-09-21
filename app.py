@@ -1,11 +1,13 @@
 # Karma Bot by Christina Aiello, 2017. cjaiello@wpi.edu
 
 from flask import Flask, request, Response, jsonify
-from slackclient import SlackClient
+import slack
 import re
 import psycopg2
 from flask_sqlalchemy import SQLAlchemy
 import os
+
+SLACK_CLIENT = slack.WebClient(os.environ["SLACK_BOT_TOKEN"], timeout=30)
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -51,9 +53,9 @@ def karma():
             print("User ID of person we want to give karma to:" + text)
             username_match_group = re.search( r'<@([\w\d_]+)>[\s+]?(\+\+|--).?', text, re.M|re.I)
             user_id = username_match_group.group(1)
-            user_info = slack_client.api_call("users.info", user=user_id)
-            if user_info.get('ok'):
-                username_match = user_info['user']['name']
+            user_info = SLACK_CLIENT.users_info(user=user_id)
+            if user_info != None:
+                username_match = user_info['user']['profile']['name']
             else:
                 print(user_info)
                 return jsonify("Error in giving karma. Please contact caiello@vistaprint.com")
@@ -86,7 +88,13 @@ def karma():
             users_total_karma = user.karma
         # Return karma
         print(jsonify(text=username_match + "'s karma is now " + str(users_total_karma)))
-        return jsonify(text=username_match + "'s karma is now " + str(users_total_karma))
+
+        response = SLACK_CLIENT.chat_postMessage(
+            channel=str(channel_name),
+            text= ("Please reply here with your standup status!" if (message == None) else message),
+            username="Standup Bot",
+            icon_emoji=":memo:"
+        )
     else:
         return jsonify(text="No karma added")
 
