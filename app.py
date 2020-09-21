@@ -38,7 +38,8 @@ def karma():
     users_total_karma = 0
     username_match = ''
     print(request.json)
-    text = request.json['text']
+    json_request = json.loads(request.json)
+    text = json_request['text']
     print("Message was: " + str(text))
 
     if '++' in text:
