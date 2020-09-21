@@ -32,12 +32,12 @@ def homepage():
     KarmaBot
     """
 
-@app.route('/karma', methods=['GET', 'POST'])
+@app.route('/karma', methods=['POST'])
 def karma():
-    print("Endpoint was hit!")
     slack_client = SlackClient(os.environ['SLACK_BOT_TOKEN'])
     users_total_karma = 0
     username_match = ''
+    text = request.form.get('text', '')
 
     # Get username from message
     # https://pythex.org/
