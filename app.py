@@ -53,6 +53,7 @@ def karma():
             username_match_group = re.search( r'<@([\w\d_]+)>[\s+]?(\+\+|--).?', text, re.M|re.I)
             user_id = username_match_group.group(1)
             user_info = SLACK_CLIENT.users_info(user=user_id)
+            print(str(user_info))
             if user_info != None:
                 username_match = user_info['user']['profile']['name']
             else:
