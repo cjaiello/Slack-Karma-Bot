@@ -43,7 +43,7 @@ def karma():
     log("channel_event was: " + str(channel_event))
     channel_id = channel_event["channel"]
 
-    if "text" in channel_event and channel_id != "C01B3N2ENAX":
+    if "text" in channel_event and channel_event["subtype"] != "bot_message":
         text = str(channel_event["text"])
         log("text was: " + str(text))
         log("channel_id was: " + str(channel_id))
