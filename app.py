@@ -122,7 +122,7 @@ def karma():
                 pinged_bot_message = "Someone pinged the bot!"
                 all_users = DATABASE.session.query(User)
                 for user in all_users:
-                    print("User: " + str(user))
+                    print("User: " + str(user.username))
                 return jsonify(text="Not a karma message")
     
     # DO NOT HAVE THIS BE A LOG, JUST A PRINT
