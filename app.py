@@ -113,9 +113,8 @@ def karma():
                 icon_emoji=":plus:"
             )
             return jsonify(text="karma_message")
-    else:
-        log("Not a karma message")
-        return jsonify(text="Not a karma message")
+    log("Not a karma message")
+    return jsonify(text="Not a karma message")
 
 
 # This will send logs to the "karma_bot_log" channel in our workspace
