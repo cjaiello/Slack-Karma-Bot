@@ -32,8 +32,10 @@ def homepage():
     KarmaBot
     """
 
-@app.route('/karma', methods=['POST'])
+@app.route('/karma', methods=['GET', 'POST'])
 def karma():
+    print(request)
+    print(request.body)
     text = request.form.get('text', '')
     print(request.form)
     print(text)
