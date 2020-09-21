@@ -37,6 +37,7 @@ def karma():
     print(request)
     print(request.json)
     print(request.json['challenge'])
+    return request.json['challenge']
 
     # slack_client = SlackClient(os.environ['SLACK_BOT_TOKEN'])
     # users_total_karma = 0
