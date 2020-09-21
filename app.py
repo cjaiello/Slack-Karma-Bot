@@ -40,10 +40,10 @@ def karma():
     users_total_karma = 0
     username_match = ""
     channel_event = request.json["event"]
-    log("channel_event was: " + str(channel_event))
     channel_id = channel_event["channel"]
+    is_bot_message = "subtype" in channel_event and channel_event["subtype"] != "bot_message"
 
-    if "text" in channel_event and channel_event["subtype"] != "bot_message":
+    if "text" in channel_event and not is_bot_message:
         text = str(channel_event["text"])
         log("text was: " + str(text))
         log("channel_id was: " + str(channel_id))
