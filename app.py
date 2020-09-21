@@ -116,7 +116,7 @@ def karma():
             return jsonify(text="karma_message")
         else:
             if text.find(BOT_USER_ID) > -1:
-                pinged_bot_message = "someone pinged the bot at " + channel_event['event_ts'] + " | "
+                pinged_bot_message = channel_event['user'] + " pinged the bot at " + channel_event['event_ts'] + " | "
                 log(pinged_bot_message + str(channel_event))
                 all_users = DATABASE.session.query(User)
                 users_and_karma = ""
@@ -127,7 +127,7 @@ def karma():
                 print(users_and_karma)
                 response = SLACK_CLIENT.chat_postMessage(
                     channel=str(channel_id),
-                    text=str(users_and_karma),
+                    text="wheeeee",
                     username="Karma Bot",
                     icon_emoji=":plus:"
                 )
