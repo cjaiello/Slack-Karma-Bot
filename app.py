@@ -103,6 +103,7 @@ def karma():
             username="Karma Bot",
             icon_emoji=":plus:"
         )
+        return jsonify(text="karma_message")
     else:
         print("No karma added")
         return jsonify(text="No karma added")
