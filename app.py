@@ -41,7 +41,7 @@ def karma():
     username_match = ""
     channel_event = request.json["event"]
     channel_id = channel_event["channel"]
-    is_bot_message = "subtype" in channel_event and channel_event["subtype"] != "bot_message"
+    is_bot_message = "subtype" in channel_event and channel_event["subtype"] == "bot_message"
 
     if "text" in channel_event and not is_bot_message:
         text = str(channel_event["text"])
