@@ -43,7 +43,7 @@ def karma():
     channel_id = channel_event["channel"]
     is_bot_message = "subtype" in channel_event and channel_event["subtype"] == "bot_message"
 
-    if "text" in channel_event and not is_bot_message:
+    if "text" in channel_event and not is_bot_message and channel_event['channel'] != "C01AZV5LTNY":
         text = str(channel_event["text"])
 
         if text.find("++") > -1 or text.find("--") > -1:
