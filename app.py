@@ -37,7 +37,7 @@ def karma():
     slack_client = SlackClient(os.environ['SLACK_BOT_TOKEN'])
     users_total_karma = 0
     username_match = ''
-    text = request.json.get('text', '')
+    text = request.json['text']
     print("Message was: " + str(text))
 
     if '++' in text:
@@ -82,7 +82,7 @@ def karma():
         # Return karma
         return jsonify(text=username_match + "'s karma is now " + str(users_total_karma))
     else:
-        return None
+        return jsonify(text="No karma added")
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
