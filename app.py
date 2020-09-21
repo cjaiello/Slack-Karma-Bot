@@ -115,24 +115,23 @@ def karma():
                 icon_emoji=":plus:"
             )
             return jsonify(text="karma_message")
-        else:
-            if text.find(BOT_USER_ID) > -1:
-                pinged_bot_message = channel_event['user'] + " pinged the bot at " + channel_event['event_ts'] + " | "
-                log(pinged_bot_message + str(channel_event))
-                all_users = DATABASE.session.query(User)
-                users_and_karma = ""
-                for user in all_users:
-                    username_and_karma = (user.username) + ": " + str(user.karma) + "\n"
-                    users_and_karma += username_and_karma
-                    print(username_and_karma)
-                print(users_and_karma)
-                response = SLACK_CLIENT.chat_postMessage(
-                    channel=str(channel_id),
-                    text="wheeeee",
-                    username="Karma Bot",
-                    icon_emoji=":plus:"
-                )
-                return jsonify(text="Not a karma message")
+        elif channel_event['type'] == 'app_mention' and text.find(BOT_USER_ID) > -1:
+            pinged_bot_message = channel_event['user'] + " pinged the bot at " + channel_event['event_ts'] + " | "
+            log(pinged_bot_message + str(channel_event))
+            all_users = DATABASE.session.query(User)
+            users_and_karma = ""
+            for user in all_users:
+                username_and_karma = (user.username) + ": " + str(user.karma) + "\n"
+                users_and_karma += username_and_karma
+                print(username_and_karma)
+            print(users_and_karma)
+            response = SLACK_CLIENT.chat_postMessage(
+                channel=str(channel_id),
+                text="wheeeee",
+                username="Karma Bot",
+                icon_emoji=":plus:"
+            )
+            return jsonify(text="Not a karma message")
     
     # DO NOT HAVE THIS BE A LOG, JUST A PRINT
     not_karma_message = "Not a karma message"
