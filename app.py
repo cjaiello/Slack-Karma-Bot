@@ -116,8 +116,9 @@ def karma():
             )
             return jsonify(text="karma_message")
         else:
+            print("Found bot user id?")
             print(text.find(BOT_USER_ID) > -1)
-            if text.find(BOT_USER_ID) > -1):
+            if text.find(BOT_USER_ID) > -1:
                 pinged_bot_message = "Someone pinged the bot!"
                 all_users = DATABASE.session.query(User)
                 for user in all_users:
