@@ -133,9 +133,8 @@ def karma():
             )
             return jsonify(text="Not a karma message")
     
-    # DO NOT HAVE THIS BE A LOG, JUST A PRINT
     not_karma_message = "Not a karma message"
-    print(not_karma_message + " | " + str(channel_event))
+    log(not_karma_message + ": " + str(channel_event))
     return jsonify(text=not_karma_message)
 
 
