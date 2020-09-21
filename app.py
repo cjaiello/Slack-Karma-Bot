@@ -95,14 +95,14 @@ def karma():
                 users_total_karma = karma_given
             else:
                 log("Updating in database: " + username_match)
-                # If user is in database, get user"s karma from database
+                # If user is in database, get user's karma from database
                 user = User.query.filter_by(username = username_match).first()
                 user.karma = user.karma + karma_given
                 db.session.commit()
                 users_total_karma = user.karma
             
             # Return karma
-            karma_message = ("Karma given was too much! Max of 5 and -5 allowed. " if was_karma_limited else "") + username_match + ""s karma is now " + str(users_total_karma) + "."
+            karma_message = ("Karma given was too much! Max of 5 and -5 allowed. " if was_karma_limited else "") + username_match + "'s karma is now " + str(users_total_karma) + "."
             log(karma_message)
 
             response = SLACK_CLIENT.chat_postMessage(
