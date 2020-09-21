@@ -46,7 +46,7 @@ def karma():
     print("channel_id was: " + str(channel_id))
 
     if '++' or '--' in text:
-        print("This is a potential karma message!")
+        print("This is a potential karma message! " + str(text))
 
         if '<@' in text:
             # Person was tagged and we actually received an ID
@@ -63,9 +63,10 @@ def karma():
         else:
             # Person wasn't tagged, so we have the actual name
             username_match_group = re.search( r'[\W+]?([\w\d_]+)[\s]?(\+\+|--).?', text, re.M|re.I)
-            username_match = username_match_group.group(1)
             if username_match_group == None:
                 return
+            else:
+                username_match = username_match_group.group(1)
 
         # Determine karma amount based on + or -
         karma_given = (text.count('+')-1) if ('+' in text) else (-1 * (text.count('-')-1))
