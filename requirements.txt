@@ -7,5 +7,5 @@ MarkupSafe==0.23
 Werkzeug==0.11.11
 flask-sqlalchemy
 psycopg2
-slack
+slackclient
 APScheduler==3.0.0
