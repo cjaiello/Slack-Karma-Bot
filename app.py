@@ -66,9 +66,11 @@ def karma():
 
         # Determine karma amount based on + or -
         karma_given = (text.count('+')-1) if ('+' in text) else (-1 * (text.count('-')-1))
+        print("Karma given to " + username_match + " was " + str(karma_given))
 
         # Look for user in database
         if not db.session.query(User).filter(User.username == username_match).count():
+            print("Adding to database: " + username_match)
             # User isn't in database. Create our user object
             user = User(username_match, karma_given)
             # Add them to the database
@@ -76,12 +78,14 @@ def karma():
             db.session.commit()
             users_total_karma = karma_given
         else:
+            print("Updating in database: " + username_match)
             # If user is in database, get user's karma from database
             user = User.query.filter_by(username = username_match).first()
             user.karma = user.karma + karma_given
             db.session.commit()
             users_total_karma = user.karma
         # Return karma
+        print(jsonify(text=username_match + "'s karma is now " + str(users_total_karma)))
         return jsonify(text=username_match + "'s karma is now " + str(users_total_karma))
     else:
         return jsonify(text="No karma added")
