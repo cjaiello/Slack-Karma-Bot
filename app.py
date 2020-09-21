@@ -12,15 +12,15 @@ SLACK_CLIENT = slack.WebClient(os.environ["SLACK_BOT_TOKEN"], timeout=30)
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = os.environ["DATABASE_URL"]
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db = SQLAlchemy(app)
-oauth_scope = "users:read"
+DATABASE = SQLAlchemy(app)
+BOT_USER_ID = "@U01AN5ZJP0X"
 
 # Create our database model
-class User(db.Model):
+class User(DATABASE.Model):
     __tablename__ = "users"
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(120), unique=True)
-    karma = db.Column(db.Integer)
+    id = DATABASE.Column(DATABASE.Integer, primary_key=True)
+    username = DATABASE.Column(DATABASE.String(120), unique=True)
+    karma = DATABASE.Column(DATABASE.Integer)
 
     def __init__(self, username, karma):
         self.username = username
@@ -88,20 +88,20 @@ def karma():
             log("Karma given to " + username_match + " was " + str(karma_given))
 
             # Look for user in database
-            if not db.session.query(User).filter(User.username == username_match).count():
+            if not DATABASE.session.query(User).filter(User.username == username_match).count():
                 log("Adding to database: " + username_match)
                 # User isn"t in database. Create our user object
                 user = User(username_match, karma_given)
                 # Add them to the database
-                db.session.add(user)
-                db.session.commit()
+                DATABASE.session.add(user)
+                DATABASE.session.commit()
                 users_total_karma = karma_given
             else:
                 log("Updating in database: " + username_match)
                 # If user is in database, get user's karma from database
                 user = User.query.filter_by(username = username_match).first()
                 user.karma = user.karma + karma_given
-                db.session.commit()
+                DATABASE.session.commit()
                 users_total_karma = user.karma
             
             # Return karma
@@ -115,9 +115,11 @@ def karma():
                 icon_emoji=":plus:"
             )
             return jsonify(text="karma_message")
-        else:
-            not_karma_message = "Not a karma message"
-            print(not_karma_message + " | " + str(channel_event))
+        elif text.find(BOT_USER_ID) > -1:
+            pinged_bot_message = "Someone pinged the bot!"
+            all_users = DATABASE.session.query(User)
+            for user in all_users:
+                print("User: " + str(user))
             return jsonify(text=not_karma_message)
     
     # DO NOT HAVE THIS BE A LOG, JUST A PRINT
