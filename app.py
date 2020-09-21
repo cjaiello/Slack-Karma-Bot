@@ -123,7 +123,7 @@ def karma():
                 all_users = DATABASE.session.query(User)
                 for user in all_users:
                     print("User: " + str(user))
-                return jsonify(text=not_karma_message)
+                return jsonify(text="Not a karma message")
     
     # DO NOT HAVE THIS BE A LOG, JUST A PRINT
     not_karma_message = "Not a karma message"
