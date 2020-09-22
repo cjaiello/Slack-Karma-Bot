@@ -97,7 +97,7 @@ def karma():
                 log("Karma given was: " + str(karma_given) + " but we are limiting it.")
                 karma_given = LOWER_BOUND_ON_KARMA_AT_A_TIME
                 was_karma_limited = True
-            log("Karma given to " + username_of_karma_recipient + " was " + str(karma_given)) + "."
+            log("Karma given to " + str(username_of_karma_recipient) + " was " + str(karma_given)) + "."
 
             # Look for user in database
             if not DATABASE.session.query(User).filter(User.username == username_of_karma_recipient).count():
