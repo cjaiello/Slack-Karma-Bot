@@ -73,7 +73,7 @@ def karma():
                     log(message)
                     return jsonify(message)
             else:
-                # Person wasn"t tagged, so we are now going to check for just the username. Must be in the
+                # Person wasn't tagged, so we are now going to check for just the username. Must be in the
                 # format of USERNAME++, USERNAME ++, USERNAME--, or USERNAME --, e.g. christinajaiello ++
                 username_match_groups = re.search( r"[\W+]?([\w\d_]+)[\s]?(\+\+|--).?", text, re.M|re.I)
                 if username_match_groups == None:
@@ -97,7 +97,7 @@ def karma():
                 log("Karma given was: " + str(karma_given) + " but we are limiting it.")
                 karma_given = LOWER_BOUND_ON_KARMA_AT_A_TIME
                 was_karma_limited = True
-            log("Karma given to " + str(username_of_karma_recipient) + " was " + str(karma_given)) + "."
+            log("Karma given to " + username_of_karma_recipient + " was " + str(karma_given) + ".")
 
             # Look for user in database
             if not DATABASE.session.query(User).filter(User.username == username_of_karma_recipient).count():
