@@ -44,98 +44,104 @@ def karma():
     channel_id = channel_event["channel"]
     is_bot_message = "subtype" in channel_event and channel_event["subtype"] == "bot_message"
 
-    if "text" in channel_event and not is_bot_message and channel_event['channel'] != KARMA_BOT_CHANNEL:
-        text = str(channel_event["text"])
+    if not is_bot_message and channel_event['channel'] != KARMA_BOT_CHANNEL:
+        if "text" in channel_event:
+            text = str(channel_event["text"])
 
-        if text.find("++") > -1 or text.find("--") > -1:
-            log("New non-bot message came in! " + str(channel_event) + " \nThis is a potential karma message! " + str(text))
+            if text.find("++") > -1 or text.find("--") > -1:
+                log("New non-bot message came in! " + str(channel_event) + " \nThis is a potential karma message! " + str(text))
 
-            if text.find("<@") > -1:
-                # Person was tagged and we actually received an ID
-                log("User ID of person we want to give karma to:" + text)
-                username_match_group = re.search( r"<@([\w\d_]+)>[\s+]?(\+\+|--).?", text, re.M|re.I)
-                user_id = username_match_group.group(1)
-                user_info = SLACK_CLIENT.users_info(user=user_id)
-                log("User info of person getting karma: " + str(user_info))
-                if user_info != None:
-                    username_match = user_info["user"]["name"]
+                if text.find("<@") > -1:
+                    # Person was tagged and we actually received an ID
+                    log("User ID of person we want to give karma to:" + text)
+                    username_match_group = re.search( r"<@([\w\d_]+)>[\s+]?(\+\+|--).?", text, re.M|re.I)
+                    user_id = username_match_group.group(1)
+                    user_info = SLACK_CLIENT.users_info(user=user_id)
+                    log("User info of person getting karma: " + str(user_info))
+                    if user_info != None:
+                        username_match = user_info["user"]["name"]
+                    else:
+                        message = "Error in giving karma to: " + user_info
+                        log(message)
+                        return jsonify(message)
                 else:
-                    message = "Error in giving karma to: " + user_info
-                    log(message)
-                    return jsonify(message)
-            else:
-                # Person wasn"t tagged, so we have the actual name
-                username_match_group = re.search( r"[\W+]?([\w\d_]+)[\s]?(\+\+|--).?", text, re.M|re.I)
-                if username_match_group == None:
-                    log("No karma added because we can't pull a name")
-                    return jsonify(text="No karma added because we can't pull a name")
+                    # Person wasn"t tagged, so we have the actual name
+                    username_match_group = re.search( r"[\W+]?([\w\d_]+)[\s]?(\+\+|--).?", text, re.M|re.I)
+                    if username_match_group == None:
+                        log("No karma added because we can't pull a name")
+                        return jsonify(text="No karma added because we can't pull a name")
+                    else:
+                        username_match = username_match_group.group(1)
+
+                # Determine karma amount based on + or -
+                karma_given = (text.count("+")-1) if ("+" in text) else (-1 * (text.count("-")-1))
+                was_karma_limited = False
+                upper_bound = 5
+                lower_bound = -5
+                if karma_given > upper_bound:
+                    log("Karma given was: " + str(karma_given) + " but we are limiting it.")
+                    karma_given = upper_bound
+                    was_karma_limited = True
+                elif karma_given < lower_bound:
+                    log("Karma given was: " + str(karma_given) + " but we are limiting it.")
+                    karma_given = lower_bound
+                    was_karma_limited = True
+                log("Karma given to " + username_match + " was " + str(karma_given))
+
+                # Look for user in database
+                if not DATABASE.session.query(User).filter(User.username == username_match).count():
+                    log("Adding to database: " + username_match)
+                    # User isn"t in database. Create our user object
+                    user = User(username_match, karma_given)
+                    # Add them to the database
+                    DATABASE.session.add(user)
+                    DATABASE.session.commit()
+                    users_total_karma = karma_given
                 else:
-                    username_match = username_match_group.group(1)
+                    log("Updating in database: " + username_match)
+                    # If user is in database, get user's karma from database
+                    user = User.query.filter_by(username = username_match).first()
+                    user.karma = user.karma + karma_given
+                    DATABASE.session.commit()
+                    users_total_karma = user.karma
+                
+                # Return karma
+                karma_message = ("Karma given was too much! Max of 5 and -5 allowed. " if was_karma_limited else "") + username_match + "'s karma is now " + str(users_total_karma) + "."
+                log(karma_message)
 
-            # Determine karma amount based on + or -
-            karma_given = (text.count("+")-1) if ("+" in text) else (-1 * (text.count("-")-1))
-            was_karma_limited = False
-            upper_bound = 5
-            lower_bound = -5
-            if karma_given > upper_bound:
-                log("Karma given was: " + str(karma_given) + " but we are limiting it.")
-                karma_given = upper_bound
-                was_karma_limited = True
-            elif karma_given < lower_bound:
-                log("Karma given was: " + str(karma_given) + " but we are limiting it.")
-                karma_given = lower_bound
-                was_karma_limited = True
-            log("Karma given to " + username_match + " was " + str(karma_given))
-
-            # Look for user in database
-            if not DATABASE.session.query(User).filter(User.username == username_match).count():
-                log("Adding to database: " + username_match)
-                # User isn"t in database. Create our user object
-                user = User(username_match, karma_given)
-                # Add them to the database
-                DATABASE.session.add(user)
-                DATABASE.session.commit()
-                users_total_karma = karma_given
-            else:
-                log("Updating in database: " + username_match)
-                # If user is in database, get user's karma from database
-                user = User.query.filter_by(username = username_match).first()
-                user.karma = user.karma + karma_given
-                DATABASE.session.commit()
-                users_total_karma = user.karma
-            
-            # Return karma
-            karma_message = ("Karma given was too much! Max of 5 and -5 allowed. " if was_karma_limited else "") + username_match + "'s karma is now " + str(users_total_karma) + "."
-            log(karma_message)
-
-            response = SLACK_CLIENT.chat_postMessage(
-                channel=str(channel_id),
-                text=karma_message,
-                username="Karma Bot",
-                icon_emoji=":plus:"
-            )
-            return jsonify(text="karma_message")
-        elif channel_event['type'] == 'app_mention' and text.find(BOT_USER_ID) > -1:
-            pinged_bot_message = channel_event['user'] + " pinged the bot at " + channel_event['event_ts'] + "."
-            log(pinged_bot_message + str(channel_event))
-            all_users = DATABASE.session.query(User)
-            users_and_karma = ""
-            for user in all_users:
-                username_and_karma = (user.username) + ": " + str(user.karma) + "\n"
-                users_and_karma += username_and_karma
-                print(username_and_karma)
-            print(users_and_karma)
-            response = SLACK_CLIENT.chat_postMessage(
-                channel=str(channel_id),
-                text=users_and_karma,
-                username="Karma Bot",
-                icon_emoji=":plus:"
-            )
-            return jsonify(text="Not a karma message")
-    
-    not_karma_message = "Not a karma message"
-    log(not_karma_message + ": " + str(channel_event))
-    return jsonify(text=not_karma_message)
+                response = SLACK_CLIENT.chat_postMessage(
+                    channel=str(channel_id),
+                    text=karma_message,
+                    username="Karma Bot",
+                    icon_emoji=":plus:"
+                )
+                return jsonify(text="karma_message")
+            elif channel_event['type'] == 'app_mention' and text.find(BOT_USER_ID) > -1:
+                pinged_bot_message = channel_event['user'] + " pinged the bot at " + channel_event['event_ts'] + "."
+                log(pinged_bot_message + str(channel_event))
+                all_users = DATABASE.session.query(User)
+                users_and_karma = ""
+                for user in all_users:
+                    username_and_karma = (user.username) + ": " + str(user.karma) + "\n"
+                    users_and_karma += username_and_karma
+                    print(username_and_karma)
+                print(users_and_karma)
+                response = SLACK_CLIENT.chat_postMessage(
+                    channel=str(channel_id),
+                    text=users_and_karma,
+                    username="Karma Bot",
+                    icon_emoji=":plus:"
+                )
+                return jsonify(text="Not a karma message")
+            else:   
+                not_karma_message = "Not a karma message"
+                log(not_karma_message + ": " + str(channel_event))
+                return jsonify(text=not_karma_message)
+    else:   
+        not_karma_message = "Not a karma message"
+        # THIS MUST BE A PRINT, NOT A LOG
+        print(not_karma_message + ": " + str(channel_event))
+        return jsonify(text=not_karma_message)
 
 
 # This will send logs to the "karma_bot_log" channel in our workspace
