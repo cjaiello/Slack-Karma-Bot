@@ -15,6 +15,7 @@ Fork the Repository
 * `cd Slack-Karma-Bot`
 
 Make Heroku app
+* Install the Heroku CLI (command line interface) https://devcenter.heroku.com/articles/heroku-cli
 * Go to https://dashboard.heroku.com/apps (register if you haven't)
 * Click `New` and then `Create New App`
 * Give it a name and click `Create`
@@ -50,6 +51,19 @@ Make Slack Workspace and Slack Bot
 * Click on `Subscribe to bot events` and select `message.channels` and `message.groups`. This will let your bot listen for messages.
 * Click the green `Save Changes` button
 * Now you'll see a message in a yellow box at the top of the screen that says, "You’ve changed the permission scopes your app uses. Please reinstall your app for these changes to take effect (and if your app is listed in the Slack App Directory, you’ll need to resubmit it as well)." Click on `Reinstall your app` and reinstall it.
+* Go to the #general channel and tag the bot, example: 
+```
+christinajaiello  9:56 PM
+@Name Your App
+```
+* After tagging the bot, you'll be asked to invite it to the channel. Invite it.
+* Go back to the Heroku `Resources` tab (Ex: https://dashboard.heroku.com/apps/christinastest/resources)
+* Click on your database
+* At the top of the page you're brought to, copy the name (Example: `postgresql-cubed-27245`)
+* Open up a new terminal and run `heroku pg:psql postgresql-cubed-27245 --app christinastest`, where `postgresql-cubed-27245` is the name of your database and `christinastest` is the name of your app
+* Now that you're connected to your database, run `CREATE TABLE users (id SERIAL PRIMARY KEY, username varchar(128), karma int);` to create your table
+* Finally, give yourself karma via `@username ++` and watch your bot respond!
+* If you're having issues and need to debug, run `heroku logs --tail --app christinastest` in a terminal window, where `christinastest` is the name of your app on heroku
 
 ## Usage: 
 @christina_aiello++ or @christina_aiello-- (or +++, ++++, etc)
