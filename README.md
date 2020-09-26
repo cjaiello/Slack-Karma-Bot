@@ -66,7 +66,7 @@ Make Slack Workspace and Slack Bot
 ![Event Subscriptions](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/event-subscriptions-enable-events-line-to-uncomment.png)
 * Save and push to git
 * Wait for it to deploy (takes... ~1min, sometimes 30 seconds?). You can monitor the build and deploy by going onto the Heroku website, going to your app, and clicking on the "Activity" tab
-![Monitor Build and Activity](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/monitor-build-and-activity.png)
+![Monitor Build and Deploy](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/monitor-build-and-deploy.png)
 * Go back to the Slack `Event Subscriptions` page for your app (URL example: https://api.slack.com/apps/A01BFFWKQ4T/event-subscriptions?)
 * Click the `Retry` button to the right of the URL you pasted in to verify
 ![Event Subscriptions](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/event-subscriptions-enable-events-endpoint-verified.png)
