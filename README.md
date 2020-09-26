@@ -77,6 +77,8 @@ Make Slack Workspace and Slack Bot
 ![Event Subscriptions](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/event-subscriptions-subscribe-to-bot-events.png)
 * Click the green `Save Changes` button at the bottom right of the page
 * Now you'll see a message in a yellow box at the top of the screen that says, "You’ve changed the permission scopes your app uses. Please reinstall your app for these changes to take effect (and if your app is listed in the Slack App Directory, you’ll need to resubmit it as well)." Click on `Reinstall your app` and reinstall it.
+
+Final Setup Steps
 * Go to the #general channel in Slack and tag the bot, example: 
 ```
 christinajaiello  9:56 PM
