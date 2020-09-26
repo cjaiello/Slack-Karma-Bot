@@ -32,7 +32,7 @@ Make Heroku app
 * In the `Deployment method` section, click `GitHub` `Connect to Github`
 ![Connect to Github](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/deployment-method-github.png)
 * Choose your repository
-* Click `Enable Automatic Deploys`
+* Click `Enable Automatic Deploys`. Now, anytime you push to Github, your code will be automatically deployed to Heroku!
 * Go to the Resources tab
 * In the `Add-Ons` section, type in `Heroku Postgres` and install the `Hobby Dev - Free` version
 ![Install Postgres](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/database-heroku-install-postgres.png)
