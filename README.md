@@ -65,6 +65,7 @@ christinajaiello  9:56 PM
 @Name Your App
 ```
 * After tagging the bot, you'll be asked to invite it to the channel. Invite it.
+* Make a channel called "karma_bot_log" in Slack
 * Go back to the Heroku `Resources` tab (Ex: https://dashboard.heroku.com/apps/christinastest/resources)
 * Click on your database
 * At the top of the page you're brought to, copy the name (Example: `postgresql-cubed-27245`)
