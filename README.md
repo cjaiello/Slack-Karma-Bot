@@ -18,8 +18,9 @@ Simple slack karma bot running on Heroku.
 
 Fork the Repository
 * Fork this repository so it's in your account
-* Clone it to your machine using `git clone`
-* `cd Slack-Karma-Bot`
+![Fork repository](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/fork-repository.png)
+* Clone it to your machine using `git clone` (More help available at https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
+* `cd Slack-Karma-Bot` to get into the directory of the code you just cloned
 
 Make Heroku app
 * Install the Heroku CLI (command line interface) https://devcenter.heroku.com/articles/heroku-cli
