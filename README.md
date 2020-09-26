@@ -58,7 +58,7 @@ Make Slack Workspace and Slack Bot
 * Back on the Basic Information page in Slack when managing your new Slack app, go to `Event Subscriptions`
 * Click the switch to turn event subscriptions on
 ![Event Subscriptions](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/event-subscriptions-enable-events.png)
-* Paste in the URL in the box: `https://christinastest.herokuapp.com/karma` (but replace christinastest with whatever you named your app)
+* Paste in the URL in the box: `https://christinastest.herokuapp.com/karma` (but replace `christinastest` with whatever you named your app)
 ![Event Subscriptions](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/event-subscriptions-enable-events-endpoint-unverified.png)
 * Go back to the code you cloned onto your computer.
 * Open `app.py`
