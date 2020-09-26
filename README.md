@@ -69,6 +69,8 @@ Make Slack Workspace and Slack Bot
 ![Monitor Build and Deploy](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/monitor-build-and-deploy.png)
 * Go back to the Slack `Event Subscriptions` page for your app (URL example: https://api.slack.com/apps/A01BFFWKQ4T/event-subscriptions?)
 * Click the `Retry` button to the right of the URL you pasted in to verify
+![Event Subscriptions](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/event-subscriptions-enable-events-endpoint-unverified-retry-button.png)
+* When it succeeds, you'll see this:
 ![Event Subscriptions](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/event-subscriptions-enable-events-endpoint-verified.png)
 * Once it says your url is verified, go back and comment out (or just remove) that `return request.json['challenge']` line again in `app.py`'s `karma` function
 * Scroll down and click on `Subscribe to bot events`, and then add `app_mention`, `message.channels`, and `message.groups`. This will let your bot listen for messages.
