@@ -14,7 +14,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 DATABASE = SQLAlchemy(app)
 
 SLACK_CLIENT = slack.WebClient(os.environ["SLACK_BOT_TOKEN"], timeout=30)
-KARMA_BOT_CHANNEL = "C01B3N2ENAX"
 BOT_EMOJI = ":up-and-down-votes:"
 UPPER_BOUND_ON_KARMA_AT_A_TIME = 5
 LOWER_BOUND_ON_KARMA_AT_A_TIME = -5
