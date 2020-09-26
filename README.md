@@ -7,7 +7,14 @@ Python, Flask, PostgreSQL
 ## Description
 Simple slack karma bot running on Heroku.
 
+## Usage: 
+@christina_aiello++ or @christina_aiello-- (or +++, ++++, etc)
+
+![How to Use Karma Bot](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/karma-bot-usage.gif)
+
+
 ## Local Setup
+(This is long, but most of it is what you'd do to set up any Slack bot.)
 
 Fork the Repository
 * Fork this repository so it's in your account
@@ -64,8 +71,3 @@ christinajaiello  9:56 PM
 * Now that you're connected to your database, run `CREATE TABLE users (id SERIAL PRIMARY KEY, username varchar(128), karma int);` to create your table
 * Finally, give yourself karma via `@username ++` and watch your bot respond!
 * If you're having issues and need to debug, run `heroku logs --tail --app christinastest` in a terminal window, where `christinastest` is the name of your app on heroku
-
-## Usage: 
-@christina_aiello++ or @christina_aiello-- (or +++, ++++, etc)
-
-![How to Use Karma Bot](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/karma-bot-usage.gif)
