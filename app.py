@@ -48,8 +48,10 @@ def karma():
     channel_id = channel_event["channel"]
     is_text_event = "text" in channel_event
     is_bot_message = "subtype" in channel_event and channel_event["subtype"] == "bot_message"
+    is_in_bot_channel = channel_event['channel'] == get_channel_id_via_name("karma_bot_log")
+    is_neither_bot_message_nor_bot_channel = not is_bot_message and not is_in_bot_channel
 
-    if is_text_event and not is_bot_message:
+    if is_text_event and is_neither_bot_message_nor_bot_channel:
         text = str(channel_event["text"])
 
         # We are specifically looking for messages with "++" and "--" (or more pluses and minuses in a row) in them
@@ -161,6 +163,16 @@ def log(log_message):
         username="Karma Bot",
         icon_emoji=BOT_EMOJI
     )
+
+# Calls API to get channel ID based on name.
+# @param channel_name
+# @return channel ID
+def get_channel_id_via_name(channel_name):
+    channels_list = SLACK_CLIENT.conversations_list(types="public_channel")
+    
+    for channel in channels_list["channels"]:
+        if channel["name"] == channel_name:
+            return channel["id"]
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
