@@ -44,7 +44,7 @@ Make Slack Workspace and Slack Bot
 * Scroll down to `Bot Token Scopes`
 * Add: app_mentions:read, channels:history, channels:join, channels:read, chat:write, chat:write.customize, chat:write.public, groups:history, incoming-webhook, users.profile:read, users:read
 * Now scroll up and click `Install App to Workspace`
-* You now have a bot token! On `https://dashboard.heroku.com/apps/christinastest/settings` (or whatever your URL is), go to `Reveal config vars` again and add the Slackbot token: SLACK_BOT_TOKEN and value is whatever your value is
+* You now have a bot token! On the Settings tab `https://dashboard.heroku.com/apps/christinastest/settings` (or whatever your URL is, which will have something other than `christinastest` and will instead have your app's name in it), go to `Reveal config vars` again and add the Slackbot token: `SLACK_BOT_TOKEN` and value is whatever your value is
 * Back on the Basic Information page, go to `Event Subscriptions`
 * Click the switch to turn event subscriptions on
 * Paste in the URL: `https://christinastest.herokuapp.com/karma` (but replace christinastest with whatever you named your app)
