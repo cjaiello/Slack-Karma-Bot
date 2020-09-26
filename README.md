@@ -69,5 +69,5 @@ christinajaiello  9:56 PM
 * At the top of the page you're brought to, copy the name (Example: `postgresql-cubed-27245`)
 * Open up a new terminal and run `heroku pg:psql postgresql-cubed-27245 --app christinastest`, where `postgresql-cubed-27245` is the name of your database and `christinastest` is the name of your app
 * Now that you're connected to your database, run `CREATE TABLE users (id SERIAL PRIMARY KEY, username varchar(128), karma int);` to create your table
-* Finally, give yourself karma via `@username ++` and watch your bot respond!
+* Finally, go back to Slack, give yourself karma via `@username ++`, and watch your bot respond!
 * If you're having issues and need to debug, run `heroku logs --tail --app christinastest` in a terminal window, where `christinastest` is the name of your app on heroku
