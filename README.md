@@ -59,6 +59,7 @@ Simple slack karma bot running on Heroku.
 * Click the switch to turn event subscriptions on
 ![Event Subscriptions](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/event-subscriptions-enable-events.png)
 * Paste in the URL in the box: `https://christinastest.herokuapp.com/karma` (but replace `christinastest` with whatever you named your app)
+
 ![Event Subscriptions](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/event-subscriptions-enable-events-endpoint-unverified.png)
 * Go back to the code you cloned onto your computer.
 * Open `app.py`
@@ -69,6 +70,7 @@ Simple slack karma bot running on Heroku.
 ![Monitor Build and Deploy](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/monitor-build-and-deploy.png)
 * Go back to the Slack `Event Subscriptions` page for your app (URL example: https://api.slack.com/apps/A01BFFWKQ4T/event-subscriptions?)
 * Click the `Retry` button to the right of the URL you pasted in to verify
+
 ![Event Subscriptions](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/event-subscriptions-enable-events-endpoint-unverified-retry-button.png)
 * When it succeeds, you'll see this:
 ![Event Subscriptions](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/event-subscriptions-enable-events-endpoint-verified.png)
