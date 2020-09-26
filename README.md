@@ -37,7 +37,7 @@ Make Heroku app
 * In the `Add-Ons` section, type in `Heroku Postgres` and install the `Hobby Dev - Free` version
 ![Install Postgres](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/database-heroku-install-postgres.png)
 * Go back to the `Settings` tab and click `Reveal config vars` again
-* The new DATABASE_URL has been added for you!
+* The new `DATABASE_URL` config var (environment variable) has been added for you! Now when you access `os.environ["DATABASE_URL"]` in the Slack Karma Bot app code, the application will pull in the value of that new `DATABASE_URL`
 ![Postgres](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/config-vars-database-url.png)
 
 
