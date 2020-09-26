@@ -16,13 +16,13 @@ Simple slack karma bot running on Heroku.
 ## Local Setup
 (This is long, but most of it is what you'd do to set up any Slack bot.)
 
-Fork the Repository
+### Fork the Repository
 * Fork this repository so it's in your account
 ![Fork repository](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/fork-repository.png)
 * Clone it to your machine using `git clone` (More help available at https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository)
 * `cd Slack-Karma-Bot` to get into the directory of the code you just cloned
 
-Make Heroku app
+### Make Heroku app
 * Install the Heroku CLI (command line interface) https://devcenter.heroku.com/articles/heroku-cli
 * Go to https://dashboard.heroku.com/apps (register if you haven't)
 * Click `New` and then `Create New App`
@@ -41,7 +41,7 @@ Make Heroku app
 ![Postgres](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/config-vars-database-url.png)
 
 
-Make Slack Workspace and Slack Bot
+### Make Slack Workspace and Slack Bot
 * Make a Slack workspace (They're free, don't worry!) at https://slack.com/create
 ![Create Slack App](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/create-slack-app.png)
 * Go to `https://api.slack.com/apps`
@@ -78,14 +78,14 @@ Make Slack Workspace and Slack Bot
 * Click the green `Save Changes` button at the bottom right of the page
 * Now you'll see a message in a yellow box at the top of the screen that says, "You’ve changed the permission scopes your app uses. Please reinstall your app for these changes to take effect (and if your app is listed in the Slack App Directory, you’ll need to resubmit it as well)." Click on `Reinstall your app` and reinstall it.
 
-Final Setup Steps
+### Final Setup Steps
 * Go to the #general channel in Slack and tag the bot, example: 
 ```
-christinajaiello  9:56 PM
+your-username  9:56 PM
 @Name Your App
 ```
 * After tagging the bot, you'll be asked to invite it to the channel. Invite it.
-* Make a channel called "karma_bot_log" in Slack
+* Make a channel called `karma_bot_log` in Slack
 * Go back to the Heroku `Resources` tab (Ex: https://dashboard.heroku.com/apps/christinastest/resources)
 * Click on your database
 * At the top of the page you're brought to, copy the name (Example: `postgresql-cubed-27245`)
@@ -93,4 +93,6 @@ christinajaiello  9:56 PM
 ![Get Database Name](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/get-database-name.png)
 * Now that you're connected to your database, run `CREATE TABLE users (id SERIAL PRIMARY KEY, username varchar(128), karma int);` to create your table
 * Finally, go back to Slack, give yourself karma via `@username ++`, and watch your bot respond!
+
+### Debugging
 * If you're having issues and need to debug, run `heroku logs --tail --app christinastest` in a terminal window, where `christinastest` is the name of your app on heroku
