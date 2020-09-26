@@ -26,7 +26,8 @@ Make Heroku app
 * Go to https://dashboard.heroku.com/apps (register if you haven't)
 * Click `New` and then `Create New App`
 * Give it a name and click `Create`
-* You will be dropped onto the `Deploy` tab
+* You will be dropped onto the `Deploy` tab. Note your app name and how to access your app via web browser:
+![Your App Name](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/this-is-your-app-name.png)
 * In the `Deployment method` section, click `GitHub` `Connect to Github`
 ![Connect to Github](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/deployment-method-github.png)
 * Choose your repository
