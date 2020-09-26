@@ -14,7 +14,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 DATABASE = SQLAlchemy(app)
 
 SLACK_CLIENT = slack.WebClient(os.environ["SLACK_BOT_TOKEN"], timeout=30)
-BOT_USER_ID = "@U01AN5ZJP0X"
 KARMA_BOT_CHANNEL = "C01B3N2ENAX"
 BOT_EMOJI = ":up-and-down-votes:"
 UPPER_BOUND_ON_KARMA_AT_A_TIME = 5
@@ -49,10 +48,8 @@ def karma():
     channel_id = channel_event["channel"]
     is_text_event = "text" in channel_event
     is_bot_message = "subtype" in channel_event and channel_event["subtype"] == "bot_message"
-    is_in_bot_channel = channel_event['channel'] == KARMA_BOT_CHANNEL
-    is_neither_bot_message_nor_bot_channel = not is_bot_message and not is_in_bot_channel
 
-    if is_text_event and is_neither_bot_message_nor_bot_channel:
+    if is_text_event and not is_bot_message:
         text = str(channel_event["text"])
 
         # We are specifically looking for messages with "++" and "--" (or more pluses and minuses in a row) in them
