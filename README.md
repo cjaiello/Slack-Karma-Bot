@@ -55,7 +55,7 @@ Make Slack Workspace and Slack Bot
 * Go back to the Slack `Event Subscriptions` page for your app (URL example: https://api.slack.com/apps/A01BFFWKQ4T/event-subscriptions?)
 * Click the `Retry` button
 * Once it says your url is verified, go back and comment out that `return request.json['challenge']` line again in `app.py`'s `karma` function
-* Click on `Subscribe to bot events` and select `message.channels` and `message.groups`. This will let your bot listen for messages.
+* Click on `Subscribe to bot events` and add `app_mention`, `message.channels`, and `message.groups`. This will let your bot listen for messages.
 * Click the green `Save Changes` button
 * Now you'll see a message in a yellow box at the top of the screen that says, "You’ve changed the permission scopes your app uses. Please reinstall your app for these changes to take effect (and if your app is listed in the Slack App Directory, you’ll need to resubmit it as well)." Click on `Reinstall your app` and reinstall it.
 * Go to the #general channel and tag the bot, example: 
