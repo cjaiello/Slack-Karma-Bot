@@ -42,6 +42,8 @@ def homepage():
 
 @app.route("/karma", methods=["POST"])
 def karma():
+    # Uncomment line below temporarily to auth your endpoint in your Slack app
+    #return request.json['challenge']
     username_of_karma_recipient = ""
     channel_event = request.json["event"]
     channel_id = channel_event["channel"]
@@ -126,7 +128,7 @@ def karma():
                 icon_emoji=BOT_EMOJI
             )
             return jsonify(text="karma_message")
-        elif channel_event['type'] == 'app_mention' and text.find(BOT_USER_ID) > -1:
+        elif channel_event['type'] == 'app_mention':
             # If somebody @'ed our Karma Bot
             pinged_bot_message = channel_event['user'] + " pinged the bot at timestamp " + channel_event['event_ts'] + "."
             log(pinged_bot_message + str(channel_event))
