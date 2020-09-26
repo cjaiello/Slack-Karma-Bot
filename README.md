@@ -37,9 +37,9 @@ Make Heroku app
 
 
 Make Slack Workspace and Slack Bot
-* Make a Slack workspace (They're free, don't worry!)
+* Make a Slack workspace (They're free, don't worry!) at https://slack.com/create
 * Go to `https://api.slack.com/apps`
-* Make your app and attach it to your workspace 
+* Make your app and attach it to your workspace you just made
 * On the Basic Information page and then go to `Permissions`
 * Scroll down to `Bot Token Scopes`
 * Add: app_mentions:read, channels:history, channels:join, channels:read, chat:write, chat:write.customize, chat:write.public, groups:history, incoming-webhook, users.profile:read, users:read
