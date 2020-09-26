@@ -9,6 +9,25 @@ Simple slack karma bot running on Heroku.
 
 ## Local Setup
 
+Fork the Repository
+* Fork this repository so it's in your account
+* Clone it to your machine using `git clone`
+* `cd Slack-Karma-Bot`
+
+Make Heroku app
+* Go to https://dashboard.heroku.com/apps (register if you haven't)
+* Click `New` and then `Create New App`
+* Give it a name and click `Create`
+* You will be dropped onto the `Deploy` tab
+* In the `Deployment method` section, click `GitHub` `Connect to Github`
+* Choose your repository
+* Click `Enable Automatic Deploys`
+* Go to the Resources tab
+* In the `Add-Ons` section, type in `Heroku Postgres` and install the `Hobby Dev - Free` version
+* Go back to the `Settings` tab and click `Reveal config vars` again
+* The new DATABASE_URL has been added for you!
+
+
 Make Slack Workspace and Slack Bot
 * Make a Slack workspace (They're free, don't worry!)
 * Go to `https://api.slack.com/apps`
@@ -21,33 +40,16 @@ Make Slack Workspace and Slack Bot
 * Back on the Basic Information page, go to `Event Subscriptions`
 * Click the switch to turn event subscriptions on
 * Paste in the URL: `https://christinastest.herokuapp.com/karma` (but replace christinastest with whatever you named your app)
-* In `Subscribe to bot events` select `messages.channel` and `messages.group`. This will let your bot listen for messages.
-* In 
-
-Fork the Repository
-* Fork this repository so it's in your account
-* Clone it to your machine using `git clone`
-* `cd Slack-Karma-Bot`
+* Go back to the code you cloned onto your computer.
 * Open `app.py`
 * Go to `def karma():` and uncomment this line: `return request.json['challenge']`
 * Save and push to git
-
-Make Heroku app
-* Go to https://dashboard.heroku.com/apps (register if you haven't)
-* Click `New` and then `Create New App`
-* Give it a name and click `Create`
-* You will be dropped onto the `Deploy` tab
-* In the `Deployment method` section, click `GitHub` `Connect to Github`
-* Choose your repository
-* Click `Enable Automatic Deploys`
-* Go to the `Settings` tab
-* Scroll down a bit to `Config Vars`
-* Click `Reveal config vars`
-* Add your SLACK_BOT_TOKEN and its value
-* Go to the Resources tab
-* In the `Add-Ons` section, type in `Heroku Postgres` and install the `Hobby Dev - Free` version
-* Go back to the `Settings` tab and click `Reveal config vars` again
-* The new DATABASE_URL has been added for you!
+* Go back to the Slack `Event Subscriptions` page for your app (URL example: https://api.slack.com/apps/A01BFFWKQ4T/event-subscriptions?)
+* Click the `Retry` button
+* Once it says your url is verified, go back and comment out that `return request.json['challenge']` line again in `app.py`'s `karma` function
+* Click on `Subscribe to bot events` and select `message.channels` and `message.groups`. This will let your bot listen for messages.
+* Click the green `Save Changes` button
+* Now you'll see a message in a yellow box at the top of the screen that says, "You’ve changed the permission scopes your app uses. Please reinstall your app for these changes to take effect (and if your app is listed in the Slack App Directory, you’ll need to resubmit it as well)." Click on `Reinstall your app` and reinstall it.
 
 ## Usage: 
 @christina_aiello++ or @christina_aiello-- (or +++, ++++, etc)
