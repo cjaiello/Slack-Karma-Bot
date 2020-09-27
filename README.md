@@ -48,7 +48,7 @@ Simple slack karma bot running on Heroku.
 ![Create Slack App](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/create-slack-app.png)
 * On the Basic Information page, go to `Permissions`
 * Scroll down to `Bot Token Scopes`
-* Add: app_mentions:read, channels:history, channels:join, channels:read, chat:write, chat:write.customize, chat:write.public, groups:history, incoming-webhook, users.profile:read, users:read
+* Add: `app_mentions:read`, `channels:history`, `channels:join`, `channels:read`, `chat:write`, `chat:write.customize`, `chat:write.public`, `groups:history`, `incoming-webhook`, `users.profile:read`, `users:read`
 * Now scroll up and click `Install App to Workspace`
 ![Install App to Workspace](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/permissions-tokens-access-token-install-to-workspace.png)
 * You now have a bot token! 
