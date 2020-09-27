@@ -14,7 +14,7 @@ Simple slack karma bot running on Heroku.
 
 
 ## Local Setup
-(This is long, but most of it is what you'd do to set up any Slack bot.)
+(This is long, but ~50% of it is what you'd do to set up any Slack bot, regardless of whether or not you use Heroku to host the app server.)
 
 ### Fork the Repository
 * Fork this repository so it's in your account
