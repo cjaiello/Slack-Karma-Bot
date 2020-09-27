@@ -42,7 +42,7 @@ Simple slack karma bot running on Heroku.
 
 
 ### Make Slack Workspace and Slack Bot
-* Make a Slack workspace (They're free, don't worry!) at https://slack.com/create
+* Make a Slack workspace (They're free, don't worry!) at https://slack.com/create or I can invite you to a test Slack workspace I set up for this Slack bot and my standup Slack bot
 ![Create Slack App](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/create-slack-app.png)
 * Go to `https://api.slack.com/apps`
 * Make your app and attach it to your workspace you just made
