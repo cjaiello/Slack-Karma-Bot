@@ -41,7 +41,7 @@ Simple slack karma bot running on Heroku.
 ![Postgres](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/config-vars-database-url.png)
 
 
-### Make Slack Workspace and Slack Bot
+### Make Slack Workspace and Slack App+Bot
 * Make a Slack workspace (They're free, don't worry!) at https://slack.com/create or I can invite you to a test Slack workspace I set up for this Slack bot and my standup Slack bot
 ![Create Slack App](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/create-slack-app.png)
 * Go to `https://api.slack.com/apps`
@@ -91,10 +91,10 @@ your-username  9:56 PM
 * Go back to the Heroku `Resources` tab (Ex: https://dashboard.heroku.com/apps/christinastest/resources)
 * Click on your database
 * At the top of the page you're brought to, copy the name (Example: `postgresql-cubed-27245`)
-* Open up a new terminal and run `heroku pg:psql postgresql-cubed-27245 --app christinastest`, where `postgresql-cubed-27245` is the name of your database and `christinastest` is the name of your app
+* Open up a new terminal and run `heroku pg:psql postgresql-cubed-27245 --app christinastest` in any directory, where `postgresql-cubed-27245` is the name of your database and `christinastest` is the name of your app
 ![Get Database Name](https://github.com/cjaiello/Slack-Karma-Bot/blob/master/static/get-database-name.png)
 * Now that you're connected to your database, run `CREATE TABLE users (id SERIAL PRIMARY KEY, username varchar(128), karma int);` to create your table
 * Finally, go back to Slack, give yourself karma via `@username ++`, and watch your bot respond!
 
 ### Debugging
-* If you're having issues and need to debug, run `heroku logs --tail --app christinastest` in a terminal window, where `christinastest` is the name of your app on heroku
+* If you're having issues and need to debug, run `heroku logs --tail --app christinastest` in a terminal window (in any directory), where `christinastest` is the name of your app on heroku. To quit, type `\q`
