@@ -2,7 +2,7 @@
 ### By Christina
 
 ## Technologies Used
-Python, Flask, PostgreSQL, Heroku
+Python, Flask, PostgreSQL, running on Heroku
 
 ## Description
 Simple slack karma bot running on Heroku.
