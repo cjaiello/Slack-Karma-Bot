@@ -5,7 +5,7 @@
 Python, Flask, PostgreSQL, running on Heroku
 
 ## Description
-Simple slack karma bot running on Heroku. You can give karma to users and take karma away from users. Karma giving and receiving is capped at 5 per Slack message.
+Simple slack karma bot running on Heroku. You can give karma to users and take karma away from users. Karma giving and receiving is capped at 5 units of karma per Slack message.
 
 ## Usage: 
 @christina_aiello++ or @christina_aiello-- (or +++, ++++, etc)
